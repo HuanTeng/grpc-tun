@@ -1,0 +1,8 @@
+syntax = "proto3";
+package pbhello;
+
+message Person { string name = 1; }
+
+message GreetingText { string Text = 1; }
+
+service GreetingService { rpc Greeting(Person) returns (GreetingText); }

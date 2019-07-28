@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pbtun;
+
+message StreamPayload { bytes body = 1; }
+
+message RegisterRequest { string name = 1; }
+
+message CloseRequest {}
+
+message MessageToServer {
+  oneof MessageBody {
+    StreamPayload payload = 1;
+    RegisterRequest register_request = 2;
+    CloseRequest close_request = 3;
+  }
+}
+
+message MessageFromServer {
+  oneof MessageBody {
+    StreamPayload payload = 1;
+    RegisterRequest register_request = 2;
+    CloseRequest close_request = 3;
+  }
+}
+
+service TunnelService {
+  rpc Tunnel(stream MessageToServer) returns (stream MessageFromServer);
+}
